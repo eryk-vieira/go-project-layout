@@ -1,8 +1,10 @@
 package service
 
 import (
+	"github.com/eryk-vieira/go-api-project-layout/internal/core/dto"
 	"github.com/eryk-vieira/go-api-project-layout/internal/core/model"
 	"github.com/eryk-vieira/go-api-project-layout/internal/core/port"
+	"github.com/google/uuid"
 )
 
 type userService struct {
@@ -15,12 +17,16 @@ func NewUserService(repository port.UserRepository) port.UserService {
 	}
 }
 
-func (service *userService) Create() (*model.User, error) {
-	user, err := service.repository.Create()
+func (service *userService) Create(*dto.CreateUser) (*model.User, error) {
+	err := service.repository.Create(&model.User{
+		Id:       uuid.NewString(),
+		Name:     "Eryk",
+		Username: "Erykeepo",
+	})
 
 	if err != nil {
 		return nil, err
 	}
 
-	return user, nil
+	return nil, nil
 }

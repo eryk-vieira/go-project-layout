@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	rest.InitRoutes()
+	rest.RunServer()
 }

@@ -3,24 +3,39 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/eryk-vieira/go-api-project-layout/internal/core/ports"
+	"github.com/eryk-vieira/go-api-project-layout/internal/core/dto"
+	"github.com/eryk-vieira/go-api-project-layout/internal/core/port"
 	"github.com/gin-gonic/gin"
 )
 
 type UserHandler struct {
-	service ports.UserService
+	port.UserService
 }
 
-func NewUserHandler(userService ports.UserService) *UserHandler {
+func NewUserHandler(userService port.UserService) *UserHandler {
 	return &UserHandler{
-		service: userService,
+		userService,
 	}
 }
 
-func (*UserHandler) CreateUser(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"error": false,
-	})
+func (service *UserHandler) CreateUser(c *gin.Context) {
+	var newUser dto.CreateUser
+
+	if err := c.ShouldBindJSON(&newUser); err != nil {
+		c.JSON(http.StatusBadRequest, err)
+
+		return
+	}
+
+	user, err := service.UserService.Create(&newUser)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
 
 	return
 }

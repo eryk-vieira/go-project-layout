@@ -17,21 +17,20 @@ func init() {
 
 func createDatabaseInstance() *sql.DB {
 	var (
-		host    = os.Getenv("DATABASE_READER_HOST")
-		port    = os.Getenv("DATABASE_READER_PORT")
-		user    = os.Getenv("DATABASE_READER_USER")
-		pass    = os.Getenv("DATABASE_READER_PASS")
-		dbname  = os.Getenv("DATABASE_READER_NAME")
-		connStr = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, pass, dbname)
+		host    = os.Getenv("DATABASE_HOST")
+		port    = os.Getenv("DATABASE_PORT")
+		user    = os.Getenv("DATABASE_USER")
+		pass    = os.Getenv("DATABASE_PASS")
+		connStr = fmt.Sprintf("host=%s port=%s user=%s password=%s sslmode=disable", host, port, user, pass)
 	)
 
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		log.Fatalf("error while opening '%s' postgresql reader database: %s\n", dbname, err.Error())
+		log.Fatalf("error while opening postgresql reader database: %s\n", err.Error())
 	}
 
 	if err := db.Ping(); err != nil {
-		log.Fatalf("error while ping '%s' postgresql reader database: %s\n", dbname, err.Error())
+		log.Fatalf("error while ping postgresql reader database: %s\n", err.Error())
 	}
 
 	log.Println("Connected to reader database:", host)
