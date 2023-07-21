@@ -1,2 +1,6 @@
 .env
 ./tmp/
+.env
+./tmp/
+/.idea/
+/tmp/
