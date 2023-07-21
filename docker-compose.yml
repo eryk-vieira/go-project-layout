@@ -1,7 +1,13 @@
 version: '3.8'
 
+
+networks:
+  default:
+    name: my-network
 services:
   db:
+    networks:
+      - default 
     container_name: ecsa_postgres
     image: postgres
     hostname: postgres
@@ -12,6 +18,8 @@ services:
     ports:
       - ${DATABASE_PORT}:${DATABASE_PORT}
   db_migrate:
+    networks:
+      - default 
     image: migrate/migrate
     volumes:
       - ./db/migrations:/migrations
@@ -19,6 +27,8 @@ services:
     links:
       - db
   api:
+    networks:
+      - default 
     container_name: api
     build: .
     ports:
@@ -33,6 +43,8 @@ services:
     links:
       - db
   app_dev:
+    networks: 
+      - default 
     container_name: app_air
     image: cosmtrek/air
     working_dir: /app
