@@ -4,6 +4,7 @@ services:
   db:
     container_name: ecsa_postgres
     image: postgres
+    hostname: postgres
     restart: always
     environment:
       POSTGRES_USER: ${DATABASE_USER}
