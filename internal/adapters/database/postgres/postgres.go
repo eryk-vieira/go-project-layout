@@ -11,11 +11,7 @@ import (
 
 var databaseInstance *sql.DB
 
-func init() {
-	databaseInstance = createDatabaseInstance()
-}
-
-func createDatabaseInstance() *sql.DB {
+func CreateDatabaseInstance() *sql.DB {
 	var (
 		host    = os.Getenv("DATABASE_HOST")
 		port    = os.Getenv("DATABASE_PORT")
@@ -25,6 +21,7 @@ func createDatabaseInstance() *sql.DB {
 	)
 
 	db, err := sql.Open("postgres", connStr)
+
 	if err != nil {
 		log.Fatalf("error while opening postgresql reader database: %s\n", err.Error())
 	}
@@ -34,6 +31,8 @@ func createDatabaseInstance() *sql.DB {
 	}
 
 	log.Println("Connected to reader database:", host)
+
+	databaseInstance = db
 
 	return db
 }
