@@ -21,7 +21,7 @@ func (service *userService) Create(*dto.CreateUser) (*model.User, error) {
 	err := service.repository.Create(&model.User{
 		Id:       uuid.NewString(),
 		Name:     "Eryk",
-		Username: "Erykeepo",
+		Username: "Erykeepo 3",
 	})
 
 	if err != nil {
