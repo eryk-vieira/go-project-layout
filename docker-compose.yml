@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    container_name: postgres
+    container_name: ecsa_postgres
     image: postgres
     restart: always
     environment:
